@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MultiCenter - Produtos</title>
+  <style>
+  body {
+  font-family: Arial, sans-serif;
+  background: #d1d3dd;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: linear-gradient(90deg, #0d63b5 0%, #38b6ff 100%);
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+  padding: 0;
+  position: relative;
+}
+.header-logo {
+  width: 480px;
+  height: 160px;
+  max-width: 94vw;
+  max-height: 28vw;
+  min-width: 160px;
+  min-height: 60px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 28px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 700px) {
+  .header-logo {
+    width: 98vw;
+    height: 90px;
+    max-width: 98vw;
+    max-height: 90px;
+    min-width: 0;
+    min-height: 0;
+    border-radius: 16px;
+  }
+  header {
+    height: 100px;
+    min-height: unset;
+    max-height: 110px;
+  }
+}
+.header-logo img {
+  width: 98%;
+  height: 98%;
+  object-fit: contain;
+  display: block;
+}
+
+.cart-button {
+  position: fixed;
+  top: 19px;
+  right: 29px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+  padding: 13px 18px;
+  border-radius: 28px;
+  cursor: pointer;
+  font-size: 25px;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  min-height: 40px;
+  transition: box-shadow .2s;
+}
+.cart-button:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  background: #e5f7ff;
+}
+.cart-count {
+  margin-left: 7px;
+  background: #00c060;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 15px;
+  min-width: 20px;
+  text-align: center;
+  padding: 2px 7px;
+  font-weight: 600;
+}
+.trust-bar {
+  background: #e6f2ff;
+  padding: 10px;
+  text-align: center;
+}
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #e9f6ff;
+  padding: 16px 0 14px 0;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  box-shadow: 0 1px 7px rgba(30,180,255,0.04);
+}
+.filters label {
+  font-size: 17px;
+  color: #007acc;
+  font-weight: 600;
+}
+#filter-category {
+  padding: 10px 26px 10px 16px;
+  font-size: 16px;
+  border: 1px solid #b4e2fb;
+  border-radius: 10px;
+  color: #007acc;
+  box-shadow: 0 1px 4px rgba(60,160,255,0.05);
+  transition: border .2s;
+}
+#filter-category:focus {
+  border: 1.5px solid #38b6ff;
+  outline: none;
+  background-color: #f3faff;
+}
+.product-grid {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  grid-template-columns: 1fr;
+}
+@media(min-width:600px){
+  .product-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(min-width:900px){
+  .product-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media(min-width:1200px){
+  .product-grid{grid-template-columns:repeat(4,1fr);}
+}
+
+/* --------- VISUAL MODERNO DOS CARDS ---------- */
+.product-card {
+  background: #fff;
+  border-radius: 18px;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 220px;
+  max-width: 380px;
+  padding: 16px 10px 20px 10px; 
+  transition: box-shadow .18s, border .18s;
+}
+.add-to-cart {
+  margin-bottom: 0 !important;
+}
+.product-card:hover {
+  box-shadow: 0 6px 20px rgba(20,60,120,0.13);
+  border: 2px solid #38b6ff;
+}
+.product-card img, .product-card .two-images img {
+  max-width:100%;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+.product-card .two-images {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 8px;
+  width: 100%;
+}
+.product-card .two-images img {
+  width: 48%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+@media(max-width:650px) {
+  .product-card .two-images { flex-direction: column; }
+  .product-card .two-images img { width: 100%; margin-bottom: 8px; }
+}
+.product-title {
+  font-size: 17px;
+  margin: 12px 0 10px 0;
+  width: 100%;
+  text-align: center;
+  word-break: break-word;
+}
+.product-details {
+  font-size: 14px;
+  color: #666;
+  font-weight: 400;
+  display: block;
+  margin-top: 4px;
+}
+.product-controls {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+}
+.quantity, .product-code {
+  padding: 8px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 15px;
+}
+.quantity { width: 48px; }
+.product-code { width: 90px; }
+.add-to-cart {
+  background: #007acc;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: background 0.2s;
+}
+.add-to-cart:hover {
+  background: #005f99;
+}
+/* --------- FIM DO VISUAL MODERNO DOS CARDS ---------- */
+
+.cart-dropdown {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  width: 320px;
+  background: #60baee;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  display: none;
+  flex-direction: column;
+  max-height: 500px;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 16px 16px 0 16px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  animation: dropcart 0.25s;
+}
+@keyframes dropcart {
+  0% {transform: translateY(-10px); opacity:0;}
+  100% {transform: translateY(0); opacity:1;}
+}
+.cart-item {
+  padding: 7px 0;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 16px;
+  color: #333;
+}
+.formulario-pedido {
+  display: flex; flex-direction: column; gap: 8px; margin-top: 8px;
+}
+.formulario-pedido input,
+.formulario-pedido select {
+  border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px;
+  font-size: 15px; background: #fafcff; outline: none; transition: border-color .2s;
+}
+.formulario-pedido input:focus,
+.formulario-pedido select:focus {
+  border-color: #38b6ff; background: #f0f8ff;
+}
+.cart-footer {
+  padding: 18px 0 16px 0; background: none; border-top: none;
+}
+#btn-finalizar {
+  width: 100%; padding: 14px 0; background: #21ba45; color: #fff; border: none;
+  border-radius: 11px; font-size: 18px; font-weight: 700; cursor: pointer;
+  transition: background .18s; box-shadow: 0 2px 8px rgba(33,186,69,.08);
+}
+#btn-finalizar:hover { background: #129a38; }
+.cart-dropdown.active{display:flex;}
+
+@media(max-width:480px) {
+  .cart-dropdown {
+    width: 97vw !important;
+    left: 1vw !important;
+    right: unset !important;
+    min-width: unset !important;
+    max-width: 99vw !important;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .product-card { min-width: unset; max-width: 98vw; }
+}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-logo">
+      <img src="img/baner.jpg" alt="MultiCenter">
+    </div>
+  </header>
+
+  <div class="trust-bar">Compre com segurança e comodidade</div>
+  <div class="filters">
+    <label for="filter-category">Filtro:</label>
+    <select id="filter-category">
+      <option value="all">Todos</option>
+      <option value="Disco CNC">Disco CNC</option>
+      <option value="polibordas">Polibordas</option>
+      <option value="disco-makita">Disco de Makita</option>
+      <option value="escovas-rotativas">Escovas Rotativas</option>
+      <option value="sistema-apicoar">Sistema de Apicoar</option>
+      <option value="abrasivos-diversos">Abrasivos Diversos</option>
+      <option value="coroa-diamantada">Coroa Diamantada</option>
+      <option value="rebolo-boca-de-pia">Rebolo para Boca de Pia</option>
+      <option value="suporte-aluminio">Suporte de Alumínio</option>
+      <option value="brocas-diamantadas">Brocas Diamantadas</option>
+      <option value="Abrasivos Frankfurt">Abrasivos Frankfurt</option>
+      <option value="Lixas">Lixas</option>
+      <option value="Serras">Serras</option>
+    </select>
+  </div>
+
+<main>
+
+  <div class="cart-button" id="open-cart">
+  🛒 <span class="cart-count">0</span>
+</div>
+
+<!-- Dropdown do carrinho -->
+<div class="cart-dropdown" id="cart-dropdown">
+  <div id="cart-items"></div>
+  <form id="order-form" class="formulario-pedido">
+    <input type="text" id="nome" placeholder="Nome completo" required>
+    <input type="text" id="cep" placeholder="CEP" required pattern="\d{5}-?\d{3}">
+    <input type="text" id="cpfcnpj" placeholder="CPF ou CNPJ" required>
+    <input type="tel" id="telefone" placeholder="WhatsApp" required>
+    <input type="text" id="endereco" placeholder="Endereço completo (com número)" required>
+    <button type="submit" id="btn-finalizar">Finalizar Pedido</button>
+  </form>
+</div>
+
+
+  <div class="product-grid">
+
+    <!-- Polibordas 100mm (virada) -->
+    <div class="product-card" data-id="1" data-categories="polibordas">
+      <img src="img/Polibordas/Poliborda(virada).jpg.jpg" alt="Polibordas 100mm (virada)">
+      <div class="product-title">
+        Polibordas (virada)<br>
+        <span class="product-details">CODIGO: 200,400,800</span>
+      </div>
+    </div>
+
+
+    <!-- Polibordas 100mm diamantadas -->
+    <div class="product-card" data-id="2" data-categories="polibordas">
+      <img src="img/Polibordas/Polibordas 100mm diamantadas.jpg.jpg" alt="Polibordas 100mm diamantadas">
+      <div class="product-title">
+        Polibordas 100mm diamantadas<br>
+        <span class="product-details">CODIGO: 220</span>
+      </div>
+    </div>
+
+    <!-- Polibordas 125mm -->
+    <div class="product-card" data-id="3" data-categories="polibordas">
+      <img src="img/Polibordas/Polibordas 125mm.jpg.jpg" alt="Polibordas 125mm">
+      <div class="product-title">
+        Polibordas 125mm<br>
+        <span class="product-details">CODIGO: 100,200,400,600,800,1500,3000</span>
+      </div>
+    </div>
+
+    <!-- Polibordas 125mm diamantadas -->
+    <div class="product-card" data-id="4" data-categories="polibordas">
+      <img src="img/Polibordas/Polibordas 125mm diamantadas.jpg.jpg" alt="Polibordas 125mm diamantadas">
+      <div class="product-title">
+        Polibordas 125mm diamantadas<br>
+        <span class="product-details">CODIGO: 120,220</span>
+      </div>
+    </div>
+
+    <!-- Polibordas 150mm -->
+    <div class="product-card" data-id="5" data-categories="polibordas">
+      <img src="img/Polibordas/Polibordas 150mm.jpg.jpg" alt="Polibordas 150mm">
+      <div class="product-title">
+        Polibordas 150mm<br>
+        <span class="product-details">CODIGO: 100,200,400,600,800,1500,3000</span>
+      </div>
+    </div>
+
+    <!-- Polibordas Bisote -->
+    <div class="product-card" data-id="8" data-categories="polibordas bisote">
+      <img src="img/Polibordas/Poliborda Bisote 100mm.jpg.jpg" alt="Polibordas Bisote">
+      <div class="product-title">
+        Polibordas Bisote<br>
+        <span class="product-details">CODIGO: 400,800,1500</span>
+      </div>
+    </div>
+
+    <!-- Polibordas Bisote diamantado -->
+    <div class="product-card" data-id="9" data-categories="polibordas">
+      <img src="img/Polibordas Bisote diamantada/Polibordas Bisote diamantada.jpg" alt="Polibordas Bisote diamantado">
+      <div class="product-title">
+        Polibordas Bisote diamantado<br>
+        <span class="product-details">CODIGO: 400</span>
+      </div>
+    </div>
+
+        <!-- Abrasivos Frankfurt Resinoides -->
+    <div class="product-card" data-id="9" data-categories="Abrasivos Frankfurt">
+      <img src="img/Abrasivos Frankfurt/Abrasivos Frankfurt Resinoides.jpg" alt="Abrasivos Frankfurt">
+      <div class="product-title">
+        Abrasivos Frankfurt Resinoides<br>    
+      </div>
+    </div>
+
+    <!-- Disco de Makita -->
+    <div class="product-card" data-id="10" data-categories="disco-makita">
+      <img src="img/Disco de Makita/Disco de Makita.jpg" alt="Disco Makita">
+      <div class="product-title">Disco de Makita Granito / mármores, Dekton, Materiais importados, Porcelanato</div>
+    </div>
+
+    <!-- Escovas Rotativas diamantadas -->
+    <div class="product-card" data-id="11" data-categories="escovas-rotativas">
+      <div class="two-images">
+        <img src="img/Escovas Rotativas/escova-angulo1.jpg" alt="Escova Rotativa 1">
+        <img src="img/Escovas Rotativas/escova-angulo2.jpg" alt="Escova Rotativa 2">
+      </div>
+      <div class="product-title">
+        Escovas rotativas diamantadas<br>
+        <span class="product-details">CODIGO: 24,36,46,60,80,120,220,320,500,800,1200,1800</span>
+      </div>
+    </div>
+
+    <!-- Escovas Rotativas carbeto -->
+    <div class="product-card" data-id="11" data-categories="escovas-rotativas">
+      <div class="two-images">
+        <img src="img/Escovas Rotativas/escova-angulo3.jpg" alt="Escova Rotativa 3">
+        <img src="img/Escovas Rotativas/escova-angulo4.jpg" alt="Escova Rotativa 4">
+      </div>
+      <div class="product-title">
+        Escovas rotativas carbeto<br>
+        <span class="product-details">CODIGO: 24,36,46,60,80,120,220,320,500,800,1200,1800</span>
+      </div>
+    </div>
+
+    <!-- Sistema de Apicoar -->
+    <div class="product-card" data-id="12" data-categories="sistema-apicoar">
+      <div class="two-images">
+        <img src="img/Apicoado/apicoado1.jpg" alt="Sistema de Apicoar ângulo 1">
+        <img src="img/Apicoado/apicoado2.jpg" alt="Sistema de Apicoar ângulo 2">
+      </div>
+      <div class="product-title">Apicado Frankfurt</div>
+    </div>
+
+    <div class="product-card" data-id="13" data-categories="sistema-apicoar">
+      <div class="two-images">
+        <img src="img/Apicoado/abrasivo1.jpg" alt="Sistema de Apicoar ângulo 1">
+        <img src="img/Apicoado/abrasivo.jpg" alt="Sistema de Apicoar ângulo 2">
+      </div>
+      <div class="product-title">Abrasivo Tijolinho (Fickert)</div>
+    </div>
+
+    <div class="product-card" data-id="14" data-categories="sistema-apicoar">
+      <div class="two-images">
+        <img src="img/Apicoado/apicoado para lixadeira.jpg" alt="Sistema de Apicoar ângulo 1">
+        <img src="img/Apicoado/apicoado para lixadeira1.jpg" alt="Sistema de Apicoar ângulo 2">
+      </div>
+      <div class="product-title">Sistema de Apicoar para Lixadeira</div>
+    </div>
+
+    <!-- Abrasivos -->
+    <div class="product-card" data-id="15" data-categories="abrasivos-diversos">
+      <div class="two-images">
+        <img src="img/Abrasivos/tijolinho.jpg" alt="Abrasivos">
+        <img src="img/Abrasivos/tijolinho (2).jpg" alt="Abrasivos">
+      </div>
+      <div class="product-title">
+        Abrasivos tijolinho (fickert) diamantado<br>
+        <span class="product-details">CODIGO: 24,36,46,60,80,120,140,270,220,320</span>
+      </div>
+    </div>
+
+    <!-- Coroa diamantada -->
+    <div class="product-card" data-id="16" data-categories="coroa-diamantada">
+      <div class="two-images">
+        <img src="img/Coroa diamantada/Coroa.jpg" alt="Coroa">
+        <img src="img/Coroa diamantada/Coroa (2).jpg" alt="Coroa 2">
+      </div>
+      <div class="product-title">Coroa Diamantada<br>
+        <span class="product-details">CODIGO: 36,46</span>
+      </div>
+    </div>
+
+    <!-- Rebolo para Boca Pia -->
+    <div class="product-card" data-id="15" data-categories="rebolo-boca-de-pia">
+      <div class="two-images">
+        <img src="img/Rebolo/Rebolo.jpg" alt="Rebolo">
+        <img src="img/Rebolo/Rebolo (2).jpg" alt="Rebolo">
+      </div>
+      <div class="product-title">
+        Rebolo para Boca de Pia<br>
+        <span class="product-details">CODIGO: 100,200,400,800,1500,3000</span>
+      </div>
+    </div>
+
+    <!-- Suporte de Alumínio para Polibordas -->
+    <div class="product-card" data-id="16" data-categories="suporte-aluminio">
+      <img src="img/Suporte de Alumínio/Suporte de Alumínio1.jpg" alt="suporte-aluminio">
+      <div class="product-title">
+        Suporte de Alumínio para Polibordas<br>
+        <span class="product-details">CODIGO: 100mm/125mm</span>
+      </div>
+    </div>
+
+    <!-- Disco CNC 125MM -->
+    <div class="product-card" data-id="19" data-categories="Disco CNC">
+      <div class="two-images">
+        <img src="img/Disco CNC 125MM/1 Disco CNC 125MM.jpg" alt="Disco CNC 1">
+        <img src="img/Disco CNC 125MM/Disco CNC 125MM.jpg" alt="Disco CNC 2">
+      </div>
+      <div class="product-title">Disco CNC 125MM</div>
+    </div>
+
+    <!-- Brocas Diamantadas em Milímetros -->
+    <div class="product-card" data-id="17" data-categories="brocas-diamantadas">
+      <div class="two-images">
+        <img src="img/Brocas Diamantadas/Brocas.jpg" alt="Brocas">
+        <img src="img/Brocas Diamantadas/Brocas1.jpg" alt="Brocas 2">
+      </div>
+      <div class="product-title">
+        Brocas Diamantadas em Milímetros<br>
+        <span class="product-details">CODIGO: 6, 8, 12, 15, 20, 25, 30, 32, 35, 40, 50, 60, 70, 80, 100</span>
+      </div>
+    </div>
+          <!-- Abrasivo frankfurt lustro 5 extra -->
+    <div class="product-card" data-id="10" data-categories="Abrasivos Frankfurt">
+      <img src="img/Abrasivo frankfurt lustro 5 extra/Abrasivo frankfurt lustro 5 extra.jpg" alt="Abrasivos Frankfurt">
+      <div class="product-title">Disco de Makita Granito / mármores, Dekton, Materiais importados, Porcelanato</div>
+    </div>
+
+              <!-- Lixas -->
+    <div class="product-card" data-id="10" data-categories="Lixas">
+      <img src="img/Lixas 100 ,125mm/Lixas 100125mm.jfif" alt="Lixas">
+      <div class="product-title">Lixas 100/125mm umidas, lixas 3 e 5 passos secas.</div>
+    </div>  
+
+                  <!-- Serras -->
+    <div class="product-card" data-id="10" data-categories="Serras">
+      <img src="img/Serras/Serras.jpg" alt="Serras">
+      <div class="product-title">Serras para mármores e granitos, dekton e materiais importados em geral. Todos os tamanhos.</div>
+    </div> 
+
+  </div>
+</main>
+   <script>
+  // Filtro
+  document.getElementById('filter-category').addEventListener('change', function() {
+    const val = this.value.toLowerCase();
+    document.querySelectorAll('.product-card').forEach(card => {
+      const categories = (card.dataset.categories || '').toLowerCase();
+      // Se selecionar "todos" mostra tudo. Senão, mostra só da categoria
+      card.style.display = (val === 'all' || categories.includes(val)) ? 'flex' : 'none';
+    });
+  });
+
+  // Exibir tudo no carregamento inicial
+  document.getElementById('filter-category').dispatchEvent(new Event('change'));
+</script>
+<script>
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+function updateCartUI() {
+  document.querySelector('.cart-count').textContent = cart.length;
+  const itemsDiv = document.getElementById('cart-items');
+  if (!cart.length) {
+    itemsDiv.innerHTML = "<p>Carrinho vazio.</p>";
+    return;
+  }
+  itemsDiv.innerHTML = cart.map((item, i) =>
+    `<div class="cart-item">
+      ${item.nome} <b>x${item.qtd}</b> <br>
+      Código: ${item.codigo ? item.codigo : '-'}
+      <button onclick="removeCartItem(${i})" style="float:right;">✕</button>
+    </div>`
+  ).join('');
+}
+window.removeCartItem = function(idx) {
+  cart.splice(idx,1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartUI();
+};
+document.querySelectorAll('.add-to-cart').forEach((btn, i) => {
+  btn.addEventListener('click', function() {
+    const card = btn.closest('.product-card');
+    const nome = card.querySelector('.product-title').innerText.trim();
+    const qtd = +card.querySelector('.quantity').value;
+    const codigo = card.querySelector('.product-code').value.trim();
+    cart.push({nome, qtd, codigo});
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartUI();
+    alert('Produto adicionado ao carrinho!');
+  });
+});
+const cartBtn = document.getElementById('open-cart');
+const cartDropdown = document.getElementById('cart-dropdown');
+cartBtn.onclick = ()=> cartDropdown.classList.toggle('active');
+document.body.addEventListener('click', e=>{
+  if(!cartDropdown.contains(e.target) && e.target!==cartBtn) cartDropdown.classList.remove('active');
+},true);
+updateCartUI();
+
+document.getElementById('order-form').onsubmit = async (e)=>{
+  e.preventDefault();
+  if (!cart.length) return alert('Carrinho vazio!');
+  const pedido = {
+    nome: document.getElementById('nome').value,
+    cep: document.getElementById('cep').value,
+    cpfcnpj: document.getElementById('cpfcnpj').value,
+    telefone: document.getElementById('telefone').value,
+    endereco: document.getElementById('endereco').value,
+    itens: cart
+  };
+  // Envia para backend seguro!
+  const res = await fetch('/.netlify/functions/save-pedido', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(pedido)
+  });
+  const data = await res.json();
+  if(data.ok) {
+    alert('Pedido enviado! Você receberá confirmação no WhatsApp');
+    cart = [];
+    localStorage.removeItem('cart');
+    updateCartUI();
+    cartDropdown.classList.remove('active');
+    document.getElementById('order-form').reset();
+  } else {
+    alert('Erro ao enviar pedido. Tente novamente!');
+  }
+};
+</script>
+
+</body>
+
+</html> 
