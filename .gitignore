@@ -1,0 +1,2 @@
+# Ignorar node_modules (evita subir centenas de arquivos inúteis)
+node_modules/
